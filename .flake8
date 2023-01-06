@@ -1,0 +1,6 @@
+[flake8]
+ignore =
+    E203,  # Whitespace before ":": This is for black. See https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html#flake8.
+    E501,  # Line too long: I leave this constraint to black.
+    W503,  # Line break before binary operator.
+    E741   # Do not use variable named 'I', 'O', or 'l'
