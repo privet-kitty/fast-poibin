@@ -53,7 +53,7 @@ def convolve_power_of_two_degree(
 RealSequence = Union[Sequence[float], npt.NDArray[np.floating[Any]]]
 
 
-@nb.njit(nb.float64[:](nb.float64[:]), cache=True)
+@nb.njit(nb.float64[:](nb.float64[:]), cache=True)  # type: ignore
 def calc_pmf_dp(probabilities: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
     """Calculate PMF of Poisson binomial distribution by dynamic programming.
 
