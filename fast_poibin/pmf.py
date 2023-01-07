@@ -69,7 +69,7 @@ FFT_THRESHOLD = 1024
 
 # calc_pmf does DP instead of divide-and-conquer method under this threshold. This value
 # was decided based on the experiment in https://github.com/privet-kitty/fast-poibin/issues/2
-DP_THRESHOLD = 128
+DP_THRESHOLD = 256
 
 
 # FIXME: This type definition is a compromise.
