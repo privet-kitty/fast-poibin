@@ -76,17 +76,19 @@ DP_THRESHOLD = 256
 # 1. np.ndarray is not Sequence. I couldn't find an appropriate iterable type that
 # contains np.ndarray.
 # 2. I'm not sure whether np.floating[Any] is a decent type for generic float.
-RealSequence = Union[Sequence[float], npt.NDArray[np.floating[Any]]]
+FloatSequence = Union[Sequence[float], npt.NDArray[np.floating[Any]]]
 
 
 def calc_pmf(
-    probabilities: RealSequence, dp_threshold: int = DP_THRESHOLD
+    probabilities: FloatSequence, dp_threshold: int = DP_THRESHOLD
 ) -> npt.NDArray[np.float64]:
     """Calculate PMF of Poisson binomial distribution.
 
     Time complexity: O(N(logN)^2)
     Space comlexity: O(N)
     """
+    if isinstance(probabilities, np.ndarray):
+        assert probabilities.ndim == 1
     size = len(probabilities)
     if size == 0:
         return np.array([1.0], dtype=np.float64)
