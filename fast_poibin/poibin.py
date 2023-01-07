@@ -1,6 +1,7 @@
 from itertools import zip_longest
 from typing import Any, Optional, Sequence, Union
 
+import numba as nb
 import numpy as np
 import numpy.typing as npt
 
@@ -52,26 +53,35 @@ def convolve_power_of_two_degree(
 RealSequence = Union[Sequence[float], npt.NDArray[np.floating[Any]]]
 
 
-def calc_pmf_dp(probabilities: RealSequence) -> npt.NDArray[np.float64]:
+@nb.njit(nb.float64[:](nb.float64[:]), cache=True)  # type: ignore
+def calc_pmf_dp(probabilities: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
     """Calculate PMF of Poisson binomial distribution by dynamic programming.
 
     Time complexity: O(N^2)
     Space complexity: O(N)
     """
-    dp: npt.NDArray[np.float64] = np.zeros(len(probabilities) + 1, dtype=np.float64)
+    n = len(probabilities)
+    dp: npt.NDArray[np.float64] = np.zeros(n + 1, dtype=np.float64)
     dp[0] = 1.0
     for prob in probabilities:
-        # np.roll works because the trailing element of dp is always zero.
-        dp = dp * np.float64(1 - prob) + np.roll(dp, 1) * np.float64(prob)
+        for i in range(n, 0, -1):
+            dp[i] = dp[i] * (1 - prob) + dp[i - 1] * prob
+        dp[0] *= 1 - prob
     return dp
 
 
-# Use numpy.convolve instead under this threshold. This value was decided
-# based on the experiment https://github.com/privet-kitty/fast-poibin/issues/1.
+# calc_pmf uses numpy.convolve instead of FFT under this threshold. This value was decided
+# based on the experiment in https://github.com/privet-kitty/fast-poibin/issues/1.
 FFT_THRESHOLD = 1024
 
+# calc_pmf does DP instead of divide-and-conquer method under this threshold. This value
+# was decided based on the experiment in https://github.com/privet-kitty/fast-poibin/issues/2
+DP_THRESHOLD = 128
 
-def calc_pmf(probabilities: RealSequence, dp_threshold: int = 0) -> npt.NDArray[np.float64]:
+
+def calc_pmf(
+    probabilities: RealSequence, dp_threshold: int = DP_THRESHOLD
+) -> npt.NDArray[np.float64]:
     """Calculate PMF of Poisson binomial distribution.
 
     Time complexity: O(N(logN)^2)
@@ -83,8 +93,11 @@ def calc_pmf(probabilities: RealSequence, dp_threshold: int = 0) -> npt.NDArray[
         return np.array([1.0], dtype=np.float64)
     if step > 1:
         # FIXME: Is min() really necessary?
+        # FIXME: I copy the returned values of calc_pmf_dp here, because they are sometimes
+        # just a view of another array, which can't be resized.
         polynomials = [
-            calc_pmf_dp(probabilities[i : min(i + step, size)]) for i in range(0, size, step)
+            calc_pmf_dp(np.array(probabilities[i : min(i + step, size)], np.float64)).copy()
+            for i in range(0, size, step)
         ]
     else:
         polynomials = [np.array((1 - p, p), dtype=np.float64) for p in probabilities]
@@ -104,15 +117,16 @@ def calc_pmf(probabilities: RealSequence, dp_threshold: int = 0) -> npt.NDArray[
     while len(polynomials) > 1:
         it = iter(polynomials)
         polynomials = [_convolve(p1, p2) for p1, p2 in zip_longest(it, it)]
-    res = polynomials[0]
+    res: npt.NDArray[np.float64] = polynomials[0]
     res.resize(size + 1, refcheck=False)
-    return np.maximum(res, 0.0)
+    res = np.maximum(res, 0.0)
+    return res
 
 
 if __name__ == "__main__":
     pmf = calc_pmf([0.1, 0.2, 0.3, 0.1, 0.2])
     cdf = np.cumsum(pmf)
     print(pmf, cdf)
-    pmf = calc_pmf_dp([0.1, 0.2, 0.3, 0.1, 0.2])
+    pmf = calc_pmf_dp(np.array([0.1, 0.2, 0.3, 0.1, 0.2]))
     cdf = np.cumsum(pmf)
     print(pmf, cdf)

@@ -93,30 +93,23 @@ def test_calc_pmf_dp_coincide_with_calc_pmf_fft() -> None:
 
 def test_calc_pmf_fft_non_negativity() -> None:
     rng = np.random.default_rng(2235)
-    for size in range(0, 51):
-        for _ in range(50):
-            probs = rng.random(size, np.float64)
-            assert np.all(calc_pmf(probs, dp_threshold=0) >= 0)
+    size = 2021
+    assert size >= FFT_THRESHOLD
+    for _ in range(50):
+        probs = rng.random(size, np.float64)
+        assert np.all(calc_pmf(probs, 0) >= 0)
 
 
-def test_calc_pmf_dp_non_float64_ndarray() -> None:
-    assert calc_pmf_dp(np.array([0.1, 0.2, 0.3], dtype=np.float16)).dtype == np.float64
-    assert calc_pmf_dp(np.array([0.1, 0.2, 0.3], dtype=np.float32)).dtype == np.float64
+def test_calc_pmf_non_float64_ndarray() -> None:
+    for threshold in [0, 4]:
+        assert calc_pmf(np.array([0.1, 0.2, 0.3], np.float16), threshold).dtype == np.float64
+        assert calc_pmf(np.array([0.1, 0.2, 0.3], np.float32), threshold).dtype == np.float64
 
 
-def test_calc_pmf_fft_non_float64_ndarray() -> None:
-    assert calc_pmf(np.array([0.1, 0.2, 0.3], dtype=np.float16), 0).dtype == np.float64
-    assert calc_pmf(np.array([0.1, 0.2, 0.3], dtype=np.float32), 0).dtype == np.float64
-
-
-def test_calc_pmf_dp_sequence() -> None:
-    assert calc_pmf_dp([0, 1, 0, 0, 1]).dtype == np.float64
-    assert calc_pmf_dp([0.1, 0.2, 0.1, 0.2, 0.3]).dtype == np.float64
-
-
-def test_calc_pmf_fft_sequence() -> None:
-    assert calc_pmf([0, 1, 0, 0, 1], 0).dtype == np.float64
-    assert calc_pmf([0.1, 0.2, 0.1, 0.2, 0.3], 0).dtype == np.float64
+def test_calc_pmf_non_ndarray() -> None:
+    for threshold in [0, 4]:
+        assert calc_pmf([0, 1, 0, 0, 1], threshold).dtype == np.float64
+        assert calc_pmf([0.1, 0.2, 0.1, 0.2, 0.3], threshold).dtype == np.float64
 
 
 def test_calc_pmf_zero() -> None:
@@ -125,7 +118,7 @@ def test_calc_pmf_zero() -> None:
 
 
 def test_calc_pmf_dp_zero() -> None:
-    nptest.assert_array_equal(calc_pmf_dp([]), [1.0])
+    nptest.assert_array_equal(calc_pmf_dp(np.array([])), [1.0])
 
 
 def test_calc_pmf_one() -> None:
@@ -134,4 +127,4 @@ def test_calc_pmf_one() -> None:
 
 
 def test_calc_pmf_dp_one() -> None:
-    nptest.assert_array_equal(calc_pmf_dp([0.3]), [0.7, 0.3])
+    nptest.assert_array_equal(calc_pmf_dp(np.array([0.3])), [0.7, 0.3])
