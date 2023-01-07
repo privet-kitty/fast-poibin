@@ -87,8 +87,10 @@ def calc_pmf(probabilities: RealSequence, dp_threshold: int = 0) -> npt.NDArray[
         return np.array([1.0], dtype=np.float64)
     if step > 1:
         # FIXME: Is min() really necessary?
+        # FIXME: I copy the returned values of calc_pmf_dp here, because they are sometimes
+        # just a view of another array, which can't be resized.
         polynomials = [
-            calc_pmf_dp(np.array(probabilities[i : min(i + step, size)], np.float64))
+            calc_pmf_dp(np.array(probabilities[i : min(i + step, size)], np.float64)).copy()
             for i in range(0, size, step)
         ]
     else:
