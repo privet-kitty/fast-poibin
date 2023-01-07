@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fast-poibin"
-version = "0.1.0"
+version = "0.2.0"
 description = "Package for computing PMF and CDF of Poisson binomial distribution."
 authors = ["Hugo Sansaqua <privet.kitty99@gmail.com>"]
 license = "MPL-2.0"
