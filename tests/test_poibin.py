@@ -13,9 +13,9 @@ from fast_poibin.poibin import (
 
 
 def test_convolve_zero() -> None:
-    nptest.assert_array_equal(convolve(np.array([1.0, 2.0]), np.array([])), np.array([]))
-    nptest.assert_array_equal(convolve(np.array([]), np.array([10.0])), np.array([]))
-    nptest.assert_array_equal(convolve(np.array([]), np.array([])), np.array([]))
+    nptest.assert_array_equal(convolve(np.array([1.0, 2.0]), np.array([])), [])
+    nptest.assert_array_equal(convolve(np.array([]), np.array([10.0])), [])
+    nptest.assert_array_equal(convolve(np.array([]), np.array([])), [])
 
 
 def test_convolve_coincides_with_numpy_convolve() -> None:
@@ -58,6 +58,18 @@ def test_convolve_power_of_two_degree_preserves_args() -> None:
         convolve_power_of_two_degree(vector1, vector2)
         nptest.assert_array_equal(vector1, vector1_clone)
         nptest.assert_array_equal(vector2, vector2_clone)
+
+
+def test_calc_pmf_small_handmade_case() -> None:
+    probs = [0.1, 0.2, 0.7, 0.2, 0.2]
+    # (0.9 + 0.1x)(0.8 + 0.2x)^3(0.3+0.7x)
+    # = 0.00056 x^5 + 0.012 x^4 + 0.0924 x^3 + 0.3152 x^2 + 0.4416 x + 0.13824
+    # (By WolframAlpha)
+    for threshold in [0, 2, 8, 32, 64]:
+        nptest.assert_allclose(
+            calc_pmf(probs, threshold),
+            [0.13824, 0.4416, 0.3152, 0.0924, 0.012, 0.00056],
+        )
 
 
 def test_calc_pmf_dp_coincide_with_calc_pmf_fft() -> None:
@@ -109,17 +121,17 @@ def test_calc_pmf_fft_sequence() -> None:
 
 def test_calc_pmf_zero() -> None:
     for threshold in [0, 1, 2, 4, 8]:
-        nptest.assert_array_equal(calc_pmf([], threshold), np.array([1.0], np.float64))
+        nptest.assert_array_equal(calc_pmf([], threshold), [1.0])
 
 
 def test_calc_pmf_dp_zero() -> None:
-    nptest.assert_array_equal(calc_pmf_dp([]), np.array([1.0], np.float64))
+    nptest.assert_array_equal(calc_pmf_dp([]), [1.0])
 
 
 def test_calc_pmf_one() -> None:
     for threshold in [0, 1, 2, 4, 8]:
-        nptest.assert_array_equal(calc_pmf([0.3], threshold), np.array([0.7, 0.3], np.float64))
+        nptest.assert_array_equal(calc_pmf([0.3], threshold), [0.7, 0.3])
 
 
 def test_calc_pmf_dp_one() -> None:
-    nptest.assert_array_equal(calc_pmf_dp([0.3]), np.array([0.7, 0.3], np.float64))
+    nptest.assert_array_equal(calc_pmf_dp([0.3]), [0.7, 0.3])
