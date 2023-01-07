@@ -3,7 +3,7 @@ from itertools import product
 import numpy as np
 import numpy.testing as nptest
 
-from fast_poibin.poibin import (
+from fast_poibin.pmf import (
     FFT_THRESHOLD,
     calc_pmf,
     calc_pmf_dp,
