@@ -94,9 +94,9 @@ def calc_pmf(probabilities: RealSequence, dp_threshold: int = 0) -> npt.NDArray[
     ) -> npt.NDArray[np.float64]:
         if poly2 is None:
             return poly1
-        if poly1.size != poly2.size:
-            poly2.resize(poly1.size, refcheck=False)
         if poly1.size >= FFT_THRESHOLD:
+            if poly1.size != poly2.size:
+                poly2.resize(poly1.size, refcheck=False)
             return convolve_power_of_two_degree(poly1, poly2)
         else:
             return np.convolve(poly1, poly2)
