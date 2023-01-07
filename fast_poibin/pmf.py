@@ -20,6 +20,9 @@ def convolve(
     fft_size = power_of_two_ceil(prod_size) * 2
     res = np.fft.irfft(np.fft.rfft(vector1, fft_size) * np.fft.rfft(vector2, fft_size), fft_size)
     res.resize(prod_size, refcheck=False)
+    # numpy.fft always deals with float64 and complex128, which is documented in
+    # https://numpy.org/devdocs/reference/routines.fft.html#type-promotion.
+    # Therefore dtype of res should be guaranteed to be float64.
     return res
 
 
