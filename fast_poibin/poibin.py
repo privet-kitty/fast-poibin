@@ -1,7 +1,7 @@
 from itertools import zip_longest
 from typing import Any, Optional, Sequence, Union
 
-import numba as nb
+import numba
 import numpy as np
 import numpy.typing as npt
 
@@ -46,7 +46,7 @@ def convolve_power_of_two_degree(
     return res
 
 
-@nb.njit(nb.float64[:](nb.float64[:]), cache=True)  # type: ignore
+@numba.njit(numba.float64[:](numba.float64[:]), cache=True)  # type: ignore
 def calc_pmf_dp(probabilities: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
     """Calculate PMF of Poisson binomial distribution by dynamic programming.
 
@@ -54,7 +54,7 @@ def calc_pmf_dp(probabilities: npt.NDArray[np.float64]) -> npt.NDArray[np.float6
     Space complexity: O(N)
     """
     n = len(probabilities)
-    dp: npt.NDArray[np.float64] = np.zeros(n + 1, dtype=np.float64)
+    dp = np.zeros(n + 1, dtype=np.float64)
     dp[0] = 1.0
     for prob in probabilities:
         for i in range(n, 0, -1):
