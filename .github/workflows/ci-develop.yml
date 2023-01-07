@@ -1,0 +1,51 @@
+name: CI-develop
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    if: "! contains(github.event.head_commit.message, '[skip ci]')"
+    steps:
+      - run: echo "${{ github.event.head_commit.message }}"
+  lint:
+    name: Run static checker
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Poetry
+        run: pip install -U poetry poethepoet
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: poetry
+      - name: Set up Python virtual environment
+        run: poetry install
+      - name: Run linter
+        run: poe lint
+      - name: Check types
+        run: poe type-check
+  test:
+    name: Run test
+    runs-on: ubuntu-latest
+    needs: prepare
+    strategy:
+      matrix:
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Poetry
+        run: pip install -U poetry poethepoet
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: poetry
+      - name: Set up Python virtual environment
+        run: poetry install
+      - name: Run tests
+        run: poe test
