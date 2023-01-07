@@ -46,13 +46,6 @@ def convolve_power_of_two_degree(
     return res
 
 
-# FIXME: This type definition is a compromise.
-# 1. np.ndarray is not Sequence. I couldn't find an appropriate iterable type that
-# contains np.ndarray.
-# 2. I'm not sure whether np.floating[Any] is a decent type.
-RealSequence = Union[Sequence[float], npt.NDArray[np.floating[Any]]]
-
-
 @nb.njit(nb.float64[:](nb.float64[:]), cache=True)  # type: ignore
 def calc_pmf_dp(probabilities: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
     """Calculate PMF of Poisson binomial distribution by dynamic programming.
@@ -77,6 +70,13 @@ FFT_THRESHOLD = 1024
 # calc_pmf does DP instead of divide-and-conquer method under this threshold. This value
 # was decided based on the experiment in https://github.com/privet-kitty/fast-poibin/issues/2
 DP_THRESHOLD = 128
+
+
+# FIXME: This type definition is a compromise.
+# 1. np.ndarray is not Sequence. I couldn't find an appropriate iterable type that
+# contains np.ndarray.
+# 2. I'm not sure whether np.floating[Any] is a decent type for generic float.
+RealSequence = Union[Sequence[float], npt.NDArray[np.floating[Any]]]
 
 
 def calc_pmf(
