@@ -87,8 +87,6 @@ def calc_pmf(
     Time complexity: O(N(logN)^2)
     Space comlexity: O(N)
     """
-    if isinstance(probabilities, np.ndarray):
-        assert probabilities.ndim == 1
     size = len(probabilities)
     if size == 0:
         return np.array([1.0], dtype=np.float64)
