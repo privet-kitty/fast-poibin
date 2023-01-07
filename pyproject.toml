@@ -21,6 +21,7 @@ poethepoet = "^0.17.1"
 pytest = "^7.2.0"
 pytest-cov = "^4.0.0"
 ipykernel = "^6.19.4"
+coverage = {extras = ["toml"], version = "^7.0.3"}
 
 [build-system]
 requires = ["poetry-core"]
