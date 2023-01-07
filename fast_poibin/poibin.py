@@ -66,13 +66,13 @@ def calc_pmf_dp(probabilities: RealSequence) -> npt.NDArray[np.float64]:
     return dp
 
 
-def calc_pmf(probabilities: RealSequence, fft_threshold: int = 0) -> npt.NDArray[np.float64]:
+def calc_pmf(probabilities: RealSequence, dp_threshold: int = 0) -> npt.NDArray[np.float64]:
     """Calculate PMF of Poisson binomial distribution.
 
     Time complexity: O(N(logN)^2)
     Space comlexity: O(N)
     """
-    step = power_of_two_ceil(fft_threshold)
+    step = power_of_two_ceil(dp_threshold)
     size = len(probabilities)
     if size == 0:
         return np.array([1.0], dtype=np.float64)

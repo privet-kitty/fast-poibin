@@ -69,7 +69,7 @@ def test_calc_pmf_fft_non_negativity() -> None:
     for size in range(0, 51):
         for _ in range(50):
             probs = rng.random(size, np.float64)
-            assert np.all(calc_pmf(probs, fft_threshold=0) >= 0)
+            assert np.all(calc_pmf(probs, dp_threshold=0) >= 0)
 
 
 def test_calc_pmf_dp_non_float64_ndarray() -> None:
