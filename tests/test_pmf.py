@@ -12,13 +12,13 @@ from fast_poibin.pmf import (
 )
 
 
-def test_convolve_zero() -> None:
+def test_convolve_zero():
     nptest.assert_array_equal(convolve(np.array([1.0, 2.0]), np.array([])), [])
     nptest.assert_array_equal(convolve(np.array([]), np.array([10.0])), [])
     nptest.assert_array_equal(convolve(np.array([]), np.array([])), [])
 
 
-def test_convolve_coincides_with_numpy_convolve() -> None:
+def test_convolve_coincides_with_numpy_convolve():
     rng = np.random.default_rng(2235)
     for size1, size2 in product(range(1, 30), range(1, 30)):
         vector1 = rng.random(size1, np.float64)
@@ -26,7 +26,7 @@ def test_convolve_coincides_with_numpy_convolve() -> None:
         nptest.assert_allclose(convolve(vector1, vector2), np.convolve(vector1, vector2))
 
 
-def test_convolve_preserves_args() -> None:
+def test_convolve_preserves_args():
     rng = np.random.default_rng(2235)
     for size1, size2 in product(range(1, 10), range(1, 10)):
         vector1 = rng.random(size1, np.float64)
@@ -38,7 +38,7 @@ def test_convolve_preserves_args() -> None:
         nptest.assert_array_equal(vector2, vector2_clone)
 
 
-def test_convolve_power_of_two_degree_coincides_with_numpy_convolve() -> None:
+def test_convolve_power_of_two_degree_coincides_with_numpy_convolve():
     rng = np.random.default_rng(2235)
     for deg in [1, 2, 4, 8, 16]:
         vector1 = rng.random(deg + 1, np.float64)
@@ -48,7 +48,7 @@ def test_convolve_power_of_two_degree_coincides_with_numpy_convolve() -> None:
         )
 
 
-def test_convolve_power_of_two_degree_preserves_args() -> None:
+def test_convolve_power_of_two_degree_preserves_args():
     rng = np.random.default_rng(2235)
     for deg in [1, 2, 4, 8, 16]:
         vector1 = rng.random(deg + 1, np.float64)
@@ -60,7 +60,7 @@ def test_convolve_power_of_two_degree_preserves_args() -> None:
         nptest.assert_array_equal(vector2, vector2_clone)
 
 
-def test_calc_pmf_small_handmade_case() -> None:
+def test_calc_pmf_small_handmade_case():
     probs = [0.1, 0.2, 0.7, 0.2, 0.2]
     # (0.9 + 0.1x)(0.8 + 0.2x)^3(0.3+0.7x)
     # = 0.00056 x^5 + 0.012 x^4 + 0.0924 x^3 + 0.3152 x^2 + 0.4416 x + 0.13824
@@ -72,7 +72,7 @@ def test_calc_pmf_small_handmade_case() -> None:
         )
 
 
-def test_calc_pmf_dp_coincide_with_calc_pmf_fft() -> None:
+def test_calc_pmf_dp_coincide_with_calc_pmf_fft():
     rng = np.random.default_rng(2235)
     for size, threshold in product(list(range(10)) + [10, 20, 29, 41, 51], [0, 2, 8, 32, 64]):
         for _ in range(50):
@@ -91,7 +91,7 @@ def test_calc_pmf_dp_coincide_with_calc_pmf_fft() -> None:
             )
 
 
-def test_calc_pmf_fft_non_negativity() -> None:
+def test_calc_pmf_fft_non_negativity():
     rng = np.random.default_rng(2235)
     size = 2021
     assert size >= FFT_THRESHOLD
@@ -100,31 +100,31 @@ def test_calc_pmf_fft_non_negativity() -> None:
         assert np.all(calc_pmf(probs, 0) >= 0)
 
 
-def test_calc_pmf_non_float64_ndarray() -> None:
+def test_calc_pmf_non_float64_ndarray():
     for threshold in [0, 4]:
         assert calc_pmf(np.array([0.1, 0.2, 0.3], np.float16), threshold).dtype == np.float64
         assert calc_pmf(np.array([0.1, 0.2, 0.3], np.float32), threshold).dtype == np.float64
 
 
-def test_calc_pmf_non_ndarray() -> None:
+def test_calc_pmf_non_ndarray():
     for threshold in [0, 4]:
         assert calc_pmf([0, 1, 0, 0, 1], threshold).dtype == np.float64
         assert calc_pmf([0.1, 0.2, 0.1, 0.2, 0.3], threshold).dtype == np.float64
 
 
-def test_calc_pmf_zero() -> None:
+def test_calc_pmf_zero():
     for threshold in [0, 1, 2, 4, 8]:
         nptest.assert_array_equal(calc_pmf([], threshold), [1.0])
 
 
-def test_calc_pmf_dp_zero() -> None:
+def test_calc_pmf_dp_zero():
     nptest.assert_array_equal(calc_pmf_dp(np.array([])), [1.0])
 
 
-def test_calc_pmf_one() -> None:
+def test_calc_pmf_one():
     for threshold in [0, 1, 2, 4, 8]:
         nptest.assert_array_equal(calc_pmf([0.3], threshold), [0.7, 0.3])
 
 
-def test_calc_pmf_dp_one() -> None:
+def test_calc_pmf_dp_one():
     nptest.assert_array_equal(calc_pmf_dp(np.array([0.3])), [0.7, 0.3])
