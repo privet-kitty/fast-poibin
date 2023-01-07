@@ -87,10 +87,10 @@ def calc_pmf(
     Time complexity: O(N(logN)^2)
     Space comlexity: O(N)
     """
-    step = power_of_two_ceil(dp_threshold)
     size = len(probabilities)
     if size == 0:
         return np.array([1.0], dtype=np.float64)
+    step = power_of_two_ceil(dp_threshold)
     if step > 1:
         # FIXME: Is min() really necessary?
         # FIXME: I copy the returned values of calc_pmf_dp here, because they are sometimes
