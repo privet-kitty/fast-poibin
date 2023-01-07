@@ -66,6 +66,11 @@ def calc_pmf_dp(probabilities: RealSequence) -> npt.NDArray[np.float64]:
     return dp
 
 
+# Use numpy.convolve instead under this threshold. This value was decided
+# based on the experiment https://github.com/privet-kitty/fast-poibin/issues/1.
+FFT_THRESHOLD = 1024
+
+
 def calc_pmf(probabilities: RealSequence, dp_threshold: int = 0) -> npt.NDArray[np.float64]:
     """Calculate PMF of Poisson binomial distribution.
 
@@ -91,7 +96,10 @@ def calc_pmf(probabilities: RealSequence, dp_threshold: int = 0) -> npt.NDArray[
             return poly1
         if poly1.size != poly2.size:
             poly2.resize(poly1.size, refcheck=False)
-        return convolve_power_of_two_degree(poly1, poly2)
+        if poly1.size >= FFT_THRESHOLD:
+            return convolve_power_of_two_degree(poly1, poly2)
+        else:
+            return np.convolve(poly1, poly2)
 
     while len(polynomials) > 1:
         it = iter(polynomials)

@@ -3,7 +3,13 @@ from itertools import product
 import numpy as np
 import numpy.testing as nptest
 
-from fast_poibin.poibin import calc_pmf, calc_pmf_dp, convolve, convolve_power_of_two_degree
+from fast_poibin.poibin import (
+    FFT_THRESHOLD,
+    calc_pmf,
+    calc_pmf_dp,
+    convolve,
+    convolve_power_of_two_degree,
+)
 
 
 def test_convolve_zero() -> None:
@@ -58,6 +64,15 @@ def test_calc_pmf_dp_coincide_with_calc_pmf_fft() -> None:
     rng = np.random.default_rng(2235)
     for size, threshold in product(list(range(10)) + [10, 20, 29, 41, 51], [0, 2, 8, 32, 64]):
         for _ in range(50):
+            probs = rng.random(size, np.float64)
+            nptest.assert_allclose(
+                calc_pmf(probs, threshold), calc_pmf_dp(probs), rtol=1e-9, atol=1e-9
+            )
+
+    # larger instance
+    for size, threshold in product([2000], [0, 64]):
+        assert size >= FFT_THRESHOLD
+        for _ in range(10):
             probs = rng.random(size, np.float64)
             nptest.assert_allclose(
                 calc_pmf(probs, threshold), calc_pmf_dp(probs), rtol=1e-9, atol=1e-9
