@@ -119,8 +119,7 @@ def calc_pmf(
         polynomials = [_convolve(p1, p2) for p1, p2 in zip_longest(it, it)]
     res: npt.NDArray[np.float64] = polynomials[0]
     res.resize(size + 1, refcheck=False)
-    res = np.maximum(res, 0.0)
-    return res
+    return np.maximum(res, 0.0)
 
 
 if __name__ == "__main__":
