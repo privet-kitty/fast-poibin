@@ -53,6 +53,11 @@ use_parentheses = true
 ensure_newline_before_comments = true
 force_grid_wrap = 0
 
+[tool.coverage.report]
+exclude_lines = [
+    "if __name__ == .__main__.:"
+]
+
 [tool.poe.tasks]
 lint = "flake8 fast_poibin tests"
 test = "pytest --cov=fast_poibin"
