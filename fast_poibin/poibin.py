@@ -66,8 +66,8 @@ def calc_pmf_dp(probabilities: RealSequence) -> npt.NDArray[np.float64]:
     return dp
 
 
-# Use numpy.convolve instead under this threshold. This value was decided
-# based on the experiment https://github.com/privet-kitty/fast-poibin/issues/1.
+# Use numpy.convolve instead of FFT under this threshold. This value was decided
+# based on the experiment in https://github.com/privet-kitty/fast-poibin/issues/1.
 FFT_THRESHOLD = 1024
 
 
