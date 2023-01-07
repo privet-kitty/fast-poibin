@@ -18,7 +18,7 @@ def convolve(
     prod_size = vector1.size + vector2.size - 1
     fft_size = power_of_two_ceil(prod_size) * 2
     res = np.fft.irfft(np.fft.rfft(vector1, fft_size) * np.fft.rfft(vector2, fft_size), fft_size)
-    res.resize(prod_size)
+    res.resize(prod_size, refcheck=False)
     return res
 
 
