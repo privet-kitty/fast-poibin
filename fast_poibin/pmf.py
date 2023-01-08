@@ -14,6 +14,7 @@ def power_of_two_ceil(x: int) -> int:
 def convolve(
     vector1: npt.NDArray[np.float64], vector2: npt.NDArray[np.float64]
 ) -> npt.NDArray[np.float64]:
+    """Convolve two vectors with FFT."""
     if vector1.size == 0 or vector2.size == 0:
         return np.array((), dtype=np.float64)
     prod_size = vector1.size + vector2.size - 1
@@ -56,8 +57,9 @@ def convolve_power_of_two_degree(
 def calc_pmf_dp(probabilities: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
     """Calculate PMF of Poisson binomial distribution by dynamic programming.
 
-    Time complexity: O(N^2)
-    Space complexity: O(N)
+    Complexity:
+        Time: O(N^2)
+        Space: O(N)
     """
     n = len(probabilities)
     dp = np.zeros(n + 1, dtype=np.float64)
@@ -88,8 +90,9 @@ FloatSequence = Union[Sequence[float], npt.NDArray[np.floating[Any]]]
 def calc_pmf(probabilities: FloatSequence, dp_step: int = DP_STEP) -> npt.NDArray[np.float64]:
     """Calculate PMF of Poisson binomial distribution.
 
-    Time complexity: O(N(logN)^2)
-    Space comlexity: O(N)
+    Complexity:
+        Time: O(N(logN)^2)
+        Space: O(N)
     """
     size = len(probabilities)
     # Just performing DP is usually better than convolving an array of dp_step length and
