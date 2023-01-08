@@ -108,19 +108,19 @@ def test_calc_pmf_non_ndarray() -> None:
         assert calc_pmf([0.1, 0.2, 0.1, 0.2, 0.3], step).dtype == np.float64
 
 
-def test_calc_pmf_zero() -> None:
-    for step in [0, 1, 2, 4, 8]:
+def test_calc_pmf_empty_array() -> None:
+    for step in [0, 1, 2, 4, 500, 1000, 1023, 1024, 1025, 10000]:
         nptest.assert_array_equal(calc_pmf([], step), [1.0])
 
 
-def test_calc_pmf_dp_zero() -> None:
+def test_calc_pmf_dp_empty_array() -> None:
     nptest.assert_array_equal(calc_pmf_dp(np.array([])), [1.0])
 
 
-def test_calc_pmf_one() -> None:
-    for step in [0, 1, 2, 4, 8]:
+def test_calc_pmf_single_element() -> None:
+    for step in [0, 1, 2, 4, 500, 1000, 1023, 1024, 1025, 10000]:
         nptest.assert_array_equal(calc_pmf([0.3], step), [0.7, 0.3])
 
 
-def test_calc_pmf_dp_one() -> None:
+def test_calc_pmf_dp_single_element() -> None:
     nptest.assert_array_equal(calc_pmf_dp(np.array([0.3])), [0.7, 0.3])
