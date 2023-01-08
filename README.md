@@ -5,12 +5,11 @@
 
 _This repository is still in alpha stage._
 
-This repository provides a Python package for efficiently computing PMF or CDF of Poisson binomial distribution.
+fast-poibin is a Python package for efficiently computing PMF or CDF of Poisson binomial distribution.
 
 
-## Manual
-
-Please see https://privet-kitty.github.io/fast-poibin/.
+- Documentation: https://privet-kitty.github.io/fast-poibin/
+- Repository: https://github.com/privet-kitty/fast-poibin/
 
 
 ## Dependencies
