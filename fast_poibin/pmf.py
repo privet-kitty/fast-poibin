@@ -92,7 +92,7 @@ def calc_pmf(probabilities: FloatSequence, dp_step: int = DP_STEP) -> npt.NDArra
     Space comlexity: O(N)
     """
     size = len(probabilities)
-    if dp_step > 1:
+    if dp_step > 0:
         # FIXME: Is min() really necessary?
         # FIXME: I copy the returned values of calc_pmf_dp here, because they are sometimes
         # just a view of another array, which can't be resized.
