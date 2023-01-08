@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>fast_poibin.poibin &mdash; fast-poibin 0.2.1 documentation</title>
+  <title>fast_poibin.poibin &mdash; fast-poibin 0.2.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -28,7 +28,7 @@
             <a href="../../index.html" class="icon icon-home"> fast-poibin
           </a>
               <div class="version">
-                0.2.1
+                0.2.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -96,6 +96,12 @@
 <span class="sd">        array([0.576, 0.352, 0.068, 0.004])</span>
 <span class="sd">        &gt;&gt;&gt; poibin.cdf</span>
 <span class="sd">        array([0.576, 0.928, 0.996, 1.   ])</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        This class stores data as arrays of `numpy.float64` no matter which type of</span>
+<span class="sd">        float is passed at initialization. This is partly because `numpy.fft` deals</span>
+<span class="sd">        with only `float64`, and partly because it&#39;s easy to implement. Please see</span>
+<span class="sd">        also https://numpy.org/doc/1.24/reference/routines.fft.html#type-promotion.</span>
 
 <span class="sd">    Complexity:</span>
 <span class="sd">        - Time: O(N(logN)^2)</span>

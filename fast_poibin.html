@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>fast_poibin package &mdash; fast-poibin 0.2.1 documentation</title>
+  <title>fast_poibin package &mdash; fast-poibin 0.2.2 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -30,7 +30,7 @@
             <a href="index.html" class="icon icon-home"> fast-poibin
           </a>
               <div class="version">
-                0.2.1
+                0.2.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -108,6 +108,13 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">poibin</span><span class="o">.</span><span class="n">cdf</span>
 <span class="go">array([0.576, 0.928, 0.996, 1.   ])</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class stores data as arrays of <cite>numpy.float64</cite> no matter which type of
+float is passed at initialization. This is partly because <cite>numpy.fft</cite> deals
+with only <cite>float64</cite>, and partly because it’s easy to implement. Please see
+also <a class="reference external" href="https://numpy.org/doc/1.24/reference/routines.fft.html#type-promotion">https://numpy.org/doc/1.24/reference/routines.fft.html#type-promotion</a>.</p>
 </div>
 <dl class="simple">
 <dt>Complexity:</dt><dd><ul class="simple">
