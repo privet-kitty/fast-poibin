@@ -1,3 +1,5 @@
+import importlib.metadata
+
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
@@ -10,8 +12,8 @@ project = "fast-poibin"
 copyright = "2023, Hugo Sansaqua"
 author = "Hugo Sansaqua"
 
-version = "0.2.0"
-release = "0.2.0"
+version = importlib.metadata.version("fast-poibin")
+release = version
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
