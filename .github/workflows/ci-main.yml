@@ -35,7 +35,7 @@ jobs:
     needs: prepare
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.8", "3.9", "3.10"]
     steps:
       - uses: actions/checkout@v3
       - name: Install Poetry
@@ -48,7 +48,6 @@ jobs:
         run: |
           poetry env use $(which python)
           poetry install
-          poetry run python --version
       - name: Run tests
         run: poe test --cov-report lcov:coverage/lcov.info
       - name: Coveralls

@@ -8,9 +8,9 @@ readme = "README.md"
 packages = [{include = "fast_poibin"}]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8.1"
 numpy = "^1.23.0"
-numba = "^0.56.4"
+numba = "^0.56.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^0.991"
