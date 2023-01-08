@@ -10,9 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     if: "! contains(github.event.head_commit.message, '[skip ci]')"
     steps:
-      - run: |
-          echo "${{ github.event.head_commit.message }}"
-          [[ 1 == 0 ]]
+      - run: echo "${{ github.event.head_commit.message }}"
   lint:
     name: Run static checker
     runs-on: ubuntu-latest
@@ -53,7 +51,7 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install
-          poetry run python --version
+          [[ $(poetry run python --version) =~ ${{ matrix.python-version }}\.* ]]
       - name: Run tests
         run: poe test --cov-report lcov:coverage/lcov.info
       - name: Coveralls
