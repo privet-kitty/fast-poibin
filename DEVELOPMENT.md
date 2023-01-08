@@ -47,7 +47,7 @@ Below are the procedures to release a new version to PyPI.
     git tag $version
     git push origin $version
     ```
-3. Publish the package to PyPI.
+3. Publish the package to PyPI. You'll need to register an API token of PyPI in advance with `poetry config pypi-token.pypi <token>`.
    ```bash
    poetry publish --build
    ```
