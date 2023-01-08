@@ -17,12 +17,12 @@ jobs:
     needs: prepare
     steps:
       - uses: actions/checkout@v3
+      - name: Install Poetry
+        run: pip install -U poetry poethepoet
       - uses: actions/setup-python@v4
         with:
           python-version: "3.10"
           cache: poetry
-      - name: Install Poetry
-        run: pip install -U poetry poethepoet
       - name: Install dependencies
         run: poetry install
       - name: Run linter
@@ -38,12 +38,12 @@ jobs:
         python-version: ["3.7", "3.8", "3.9", "3.10"]
     steps:
       - uses: actions/checkout@v3
+      - name: Install Poetry
+        run: pip install -U poetry poethepoet
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
           cache: poetry
-      - name: Install Poetry
-        run: pip install -U poetry poethepoet
       - name: Install dependencies
         run: poetry install
       - name: Run tests
