@@ -30,7 +30,10 @@ def convolve_power_of_two_degree(
     vector1: npt.NDArray[np.float64], vector2: npt.NDArray[np.float64]
 ) -> npt.NDArray[np.float64]:
     """
-    `vector1` and `vector2` must have the same power-of-two degree.
+    DEPRECATED.
+
+    Note:
+        `vector1` and `vector2` must have the same power-of-two degree.
     """
     prod_size = vector1.size + vector2.size - 1
     res = np.zeros(prod_size, dtype=np.float64)
@@ -70,9 +73,9 @@ def calc_pmf_dp(probabilities: npt.NDArray[np.float64]) -> npt.NDArray[np.float6
 # based on the experiment in https://github.com/privet-kitty/fast-poibin/issues/1.
 FFT_THRESHOLD = 1024
 
-# calc_pmf does DP instead of divide-and-conquer method under this threshold. This value
-# was decided based on the experiment in https://github.com/privet-kitty/fast-poibin/issues/2
-DP_THRESHOLD = 256
+# calc_pmf first performs DP on each subarray of this length. This value was decided
+# based on the experiment in https://github.com/privet-kitty/fast-poibin/issues/3
+DP_STEP = 255
 
 
 # FIXME: This type definition is a compromise.
@@ -82,9 +85,7 @@ DP_THRESHOLD = 256
 FloatSequence = Union[Sequence[float], npt.NDArray[np.floating[Any]]]
 
 
-def calc_pmf(
-    probabilities: FloatSequence, dp_threshold: int = DP_THRESHOLD
-) -> npt.NDArray[np.float64]:
+def calc_pmf(probabilities: FloatSequence, dp_step: int = DP_STEP) -> npt.NDArray[np.float64]:
     """Calculate PMF of Poisson binomial distribution.
 
     Time complexity: O(N(logN)^2)
@@ -93,14 +94,13 @@ def calc_pmf(
     size = len(probabilities)
     if size == 0:
         return np.array([1.0], dtype=np.float64)
-    step = power_of_two_ceil(dp_threshold)
-    if step > 1:
+    if dp_step > 1:
         # FIXME: Is min() really necessary?
         # FIXME: I copy the returned values of calc_pmf_dp here, because they are sometimes
         # just a view of another array, which can't be resized.
         polynomials = [
-            calc_pmf_dp(np.array(probabilities[i : min(i + step, size)], np.float64)).copy()
-            for i in range(0, size, step)
+            calc_pmf_dp(np.array(probabilities[i : min(i + dp_step, size)], np.float64)).copy()
+            for i in range(0, size, dp_step)
         ]
     else:
         polynomials = [np.array((1 - p, p), dtype=np.float64) for p in probabilities]
@@ -113,7 +113,7 @@ def calc_pmf(
         if poly1.size >= FFT_THRESHOLD:
             if poly1.size != poly2.size:
                 poly2.resize(poly1.size, refcheck=False)
-            return convolve_power_of_two_degree(poly1, poly2)
+            return convolve(poly1, poly2)
         else:
             return np.convolve(poly1, poly2)
 
