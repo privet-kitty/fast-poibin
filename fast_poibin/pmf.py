@@ -22,7 +22,7 @@ def convolve(
     res.resize(prod_size, refcheck=False)
     # numpy.fft always deals with float64 and complex128, which is documented in
     # https://numpy.org/devdocs/reference/routines.fft.html#type-promotion.
-    # Therefore dtype of res should be guaranteed to be float64.
+    # Therefore it is guaranteed that dtype of res is float64.
     return res
 
 
@@ -93,7 +93,8 @@ def calc_pmf(probabilities: FloatSequence, dp_step: int = DP_STEP) -> npt.NDArra
     """
     size = len(probabilities)
     # Just performing DP is usually better than convolving an array of dp_step length and
-    # another short one, though this idea should further be refined.
+    # another short one, at least for dp_step=DP_STEP. However, this idea should further
+    # be refined. Maybe I'd better introduce an independent threshold.
     if size < dp_step * 2:
         res: npt.NDArray[np.float64] = calc_pmf_dp(np.array(probabilities, np.float64))
         return res
