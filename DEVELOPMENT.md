@@ -43,6 +43,7 @@ Below are the procedures to release a new version to PyPI.
     # or $version = poetry version --short patch in PowerShell
     echo $version
     git commit -am "Bump version"
+    git push
     git tag $version
     git push origin $version
     ```
