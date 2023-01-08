@@ -79,7 +79,7 @@ DP_STEP = 255
 
 
 # FIXME: This type definition is a compromise.
-# 1. np.ndarray is not Sequence. I couldn't find an appropriate iterable type that
+# 1. 1D np.ndarray is not Sequence. I couldn't find an appropriate iterable type that
 # contains np.ndarray.
 # 2. I'm not sure whether np.floating[Any] is a decent type for generic float.
 FloatSequence = Union[Sequence[float], npt.NDArray[np.floating[Any]]]
