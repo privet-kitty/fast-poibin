@@ -92,8 +92,6 @@ def calc_pmf(probabilities: FloatSequence, dp_step: int = DP_STEP) -> npt.NDArra
     Space comlexity: O(N)
     """
     size = len(probabilities)
-    if size == 0:
-        return np.array([1.0], dtype=np.float64)
     if dp_step > 1:
         # FIXME: Is min() really necessary?
         # FIXME: I copy the returned values of calc_pmf_dp here, because they are sometimes
@@ -120,6 +118,9 @@ def calc_pmf(probabilities: FloatSequence, dp_step: int = DP_STEP) -> npt.NDArra
     while len(polynomials) > 1:
         it = iter(polynomials)
         polynomials = [_convolve(p1, p2) for p1, p2 in zip_longest(it, it)]
+
+    if not polynomials:
+        return np.array([1.0], np.float64)
     res: npt.NDArray[np.float64] = polynomials[0]
     res.resize(size + 1, refcheck=False)
     return np.maximum(res, 0.0)
