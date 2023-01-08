@@ -5,18 +5,37 @@
 [![PyPI Version](https://img.shields.io/pypi/v/fast-poibin)](https://pypi.org/project/fast-poibin/)
 
 
-_This repository is still in alpha stage._
-
 fast-poibin is a Python package for efficiently computing PMF or CDF of Poisson binomial distribution.
 
 
-- Documentation: https://privet-kitty.github.io/fast-poibin/
+- API Reference: https://privet-kitty.github.io/fast-poibin/
 - Repository: https://github.com/privet-kitty/fast-poibin/
 
 
-## Dependencies
+## Installation
+
+
+
+```bash
+pip install fast-poibin
+```
+
 
 You need Python version 3.8.1 or later. As of this writing, Python 3.11.x isn't supported, but it will be available as soon as [numba supports it](https://github.com/numba/numba/issues/8304).
+
+## Basic Usage
+
+
+```python
+>>> from fast_poibin import PoiBin
+>>> poibin = PoiBin([0.1, 0.2, 0.2])
+>>> poibin.pmf
+array([0.576, 0.352, 0.068, 0.004])
+>>> poibin.cdf
+array([0.576, 0.928, 0.996, 1.   ])
+```
+
+
 
 
 ## Copyright
