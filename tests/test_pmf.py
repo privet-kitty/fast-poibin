@@ -4,6 +4,7 @@ import numpy as np
 import numpy.testing as nptest
 
 from fast_poibin.pmf import (
+    DP_STEP,
     FFT_THRESHOLD,
     calc_pmf,
     calc_pmf_dp,
@@ -65,7 +66,7 @@ def test_calc_pmf_small_handmade_case() -> None:
     # (0.9 + 0.1x)(0.8 + 0.2x)^3(0.3+0.7x)
     # = 0.00056 x^5 + 0.012 x^4 + 0.0924 x^3 + 0.3152 x^2 + 0.4416 x + 0.13824
     # (By WolframAlpha)
-    for step in [0, 2, 8, 32, 64]:
+    for step in range(10):
         nptest.assert_allclose(
             calc_pmf(probs, step),
             [0.13824, 0.4416, 0.3152, 0.0924, 0.012, 0.00056],
@@ -74,14 +75,15 @@ def test_calc_pmf_small_handmade_case() -> None:
 
 def test_calc_pmf_dp_coincide_with_calc_pmf_fft() -> None:
     rng = np.random.default_rng(2235)
-    for size, step in product(list(range(10)) + [10, 20, 29, 41, 51], [0, 2, 8, 32, 64]):
+    for size, step in product(list(range(10)) + [10, 20, 29, 41, 51], [0, 1, 2, 3, 30, DP_STEP]):
         for _ in range(50):
             probs = rng.random(size, np.float64)
             nptest.assert_allclose(calc_pmf(probs, step), calc_pmf_dp(probs), rtol=1e-9, atol=1e-9)
 
-    # larger instance
-    for size, step in product([2000], [0, 64]):
-        assert size >= FFT_THRESHOLD
+    # sufficiently large instance so that FFT is used
+    size = 2001
+    assert size >= FFT_THRESHOLD
+    for step in [0, 10, DP_STEP]:
         for _ in range(10):
             probs = rng.random(size, np.float64)
             nptest.assert_allclose(calc_pmf(probs, step), calc_pmf_dp(probs), rtol=1e-9, atol=1e-9)
@@ -97,13 +99,13 @@ def test_calc_pmf_fft_non_negativity() -> None:
 
 
 def test_calc_pmf_non_float64_ndarray() -> None:
-    for step in [0, 4]:
+    for step in range(10):
         assert calc_pmf(np.array([0.1, 0.2, 0.3], np.float16), step).dtype == np.float64
         assert calc_pmf(np.array([0.1, 0.2, 0.3], np.float32), step).dtype == np.float64
 
 
 def test_calc_pmf_non_ndarray() -> None:
-    for step in [0, 4]:
+    for step in range(10):
         assert calc_pmf([0, 1, 0, 0, 1], step).dtype == np.float64
         assert calc_pmf([0.1, 0.2, 0.1, 0.2, 0.3], step).dtype == np.float64
 
