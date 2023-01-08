@@ -5,6 +5,8 @@ description = "Package for computing PMF and CDF of Poisson binomial distributio
 authors = ["Hugo Sansaqua <privet.kitty99@gmail.com>"]
 license = "MPL-2.0"
 readme = "README.md"
+repository = "https://github.com/privet-kitty/fast-poibin"
+documentation = "https://privet-kitty.github.io/fast-poibin/"
 packages = [{include = "fast_poibin"}]
 
 [tool.poetry.dependencies]
