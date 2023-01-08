@@ -65,3 +65,4 @@ exclude_lines = [
 lint = "flake8 fast_poibin tests"
 test = "pytest --cov=fast_poibin"
 type-check = "mypy fast_poibin tests"
+docs = "sphinx-build docs docs/_build"
