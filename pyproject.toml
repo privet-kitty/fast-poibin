@@ -23,6 +23,8 @@ pytest-cov = "^4.0.0"
 ipykernel = "^6.19.4"
 coverage = {extras = ["toml"], version = "^7.0.3"}
 pytest-mock = "^3.10.0"
+sphinx-rtd-theme = "1.2.0rc2"
+Sphinx = "^6.1.2"
 
 [build-system]
 requires = ["poetry-core"]
