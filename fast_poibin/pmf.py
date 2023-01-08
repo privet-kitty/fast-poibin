@@ -15,7 +15,7 @@ def convolve(
     vector1: npt.NDArray[np.float64], vector2: npt.NDArray[np.float64]
 ) -> npt.NDArray[np.float64]:
     if vector1.size == 0 or vector2.size == 0:
-        return np.array([], dtype=np.float64)
+        return np.array((), dtype=np.float64)
     prod_size = vector1.size + vector2.size - 1
     fft_size = power_of_two_ceil(prod_size) * 2
     res = np.fft.irfft(np.fft.rfft(vector1, fft_size) * np.fft.rfft(vector2, fft_size), fft_size)
@@ -120,7 +120,7 @@ def calc_pmf(probabilities: FloatSequence, dp_step: int = DP_STEP) -> npt.NDArra
         polynomials = [_convolve(p1, p2) for p1, p2 in zip_longest(it, it)]
 
     if not polynomials:
-        return np.array([1.0], np.float64)
+        return np.array((1.0,), np.float64)
     res: npt.NDArray[np.float64] = polynomials[0]
     res.resize(size + 1, refcheck=False)
     return np.maximum(res, 0.0)
