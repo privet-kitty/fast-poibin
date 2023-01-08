@@ -28,9 +28,11 @@ This file documents the various procedures related to the development.
 
 So far I haven't automated the release process in CI. On the other hand, the documentation is automatically deployed to GitHub Pages on push to `main` branch. So you need to be careful to avoid inconsistencies with the latest PyPI version.
 
+Below are the procedures to release a new version to PyPI.
+
 
 1. Check out the latest `main` branch.
-    ```basj
+    ```bash
     git checkout main
     git fetch
     git reset --hard origin/main
