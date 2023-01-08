@@ -27,6 +27,12 @@ class PoiBin:
         >>> poibin.cdf
         array([0.576, 0.928, 0.996, 1.   ])
 
+    Note:
+        This class stores data as arrays of `numpy.float64` no matter which type of
+        float is passed at initialization. This is partly because `numpy.fft` deals
+        with only `float64`, and partly because it's easy to implement. Please see
+        also https://numpy.org/doc/1.24/reference/routines.fft.html#type-promotion.
+
     Complexity:
         - Time: O(N(logN)^2)
         - Space: O(N)
