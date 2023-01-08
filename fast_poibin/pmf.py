@@ -115,8 +115,6 @@ def calc_pmf(probabilities: FloatSequence, dp_step: int = DP_STEP) -> npt.NDArra
         if poly2 is None:
             return poly1
         if poly1.size >= FFT_THRESHOLD:
-            if poly1.size != poly2.size:
-                poly2.resize(poly1.size, refcheck=False)
             return convolve(poly1, poly2)
         else:
             return np.convolve(poly1, poly2)
