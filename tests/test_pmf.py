@@ -2,6 +2,7 @@ from itertools import product
 
 import numpy as np
 import numpy.testing as nptest
+from pytest_mock import MockerFixture
 
 from fast_poibin.pmf import (
     DP_STEP,
@@ -71,6 +72,40 @@ def test_calc_pmf_small_handmade_case() -> None:
             calc_pmf(probs, step),
             [0.13824, 0.4416, 0.3152, 0.0924, 0.012, 0.00056],
         )
+
+
+def test_calc_pmf_switch_dp_and_dc(mocker: MockerFixture) -> None:
+    """
+    calc_pmf should decide whether to use DP depending on the size and dp_step.
+    """
+    rng = np.random.default_rng(2235)
+    mocked_calc_pmf_dp = mocker.patch("fast_poibin.pmf.calc_pmf_dp")
+    for size in range(10):
+        probs = rng.random(size, np.float64)
+        calc_pmf(probs, dp_step=0)
+    mocked_calc_pmf_dp.assert_not_called()
+    for size in range(10):
+        probs = rng.random(size, np.float64)
+        calc_pmf(probs, dp_step=10000)
+        mocked_calc_pmf_dp.assert_called_once()
+        mocked_calc_pmf_dp.reset_mock()
+
+
+def test_calc_pmf_use_fft_for_larger_instance(mocker: MockerFixture) -> None:
+    """
+    calc_pmf should decide whether to use FFT convolution depending on the size.
+    """
+    rng = np.random.default_rng(2235)
+    mocked_convolve = mocker.patch("fast_poibin.pmf.convolve")
+    for step in [0, 1, 2, 100, DP_STEP]:
+        probs = rng.random(FFT_THRESHOLD // 2, np.float64)
+        calc_pmf(probs, step)
+        mocked_convolve.assert_not_called()
+        mocked_convolve.reset_mock()
+        probs = rng.random(FFT_THRESHOLD * 2, np.float64)
+        calc_pmf(probs, step)
+        mocked_convolve.assert_called()
+        mocked_convolve.reset_mock()
 
 
 def test_calc_pmf_dp_coincide_with_calc_pmf_fft() -> None:
