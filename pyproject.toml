@@ -10,13 +10,13 @@ documentation = "https://privet-kitty.github.io/fast-poibin/"
 packages = [{include = "fast_poibin"}]
 
 [tool.poetry.dependencies]
-python = "^3.8.1"
+python = "^3.8"
 numpy = "^1.23.0"
 numba = "^0.56.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^0.991"
-flake8 = "^6.0.0"
+flake8 = "^5.0.4"
 black = "^22.12.0"
 isort = "^5.11.4"
 poethepoet = "^0.17.1"

@@ -21,7 +21,7 @@ pip install fast-poibin
 ```
 
 
-You need Python version 3.8.1 or later. As of this writing, Python 3.11.x isn't supported, but it will be available as soon as [numba supports it](https://github.com/numba/numba/issues/8304).
+You need Python version 3.8 or later. As of this writing, Python 3.11 isn't supported, but it will be available as soon as [numba supports it](https://github.com/numba/numba/issues/8304).
 
 ## Basic Usage
 
