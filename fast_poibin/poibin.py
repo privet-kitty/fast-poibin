@@ -16,9 +16,9 @@ def _validate_probabilities(probabilities: FloatSequence) -> None:
 class PoiBin:
     """Class for storing PMF and CDF of Poisson binomial distribution.
 
-    Complexity:
-        - Time: O(N(logN)^2)
-        - Space: O(N)
+    Attributes:
+        pmf: array of probability mass function
+        cdf: array of cumulative distribution function
 
     Examples:
         >>> poibin = PoiBin([0.1, 0.2, 0.2])
@@ -27,10 +27,14 @@ class PoiBin:
         >>> poibin.cdf
         array([0.576, 0.928, 0.996, 1.   ])
 
-    Note:
+    Complexity:
+        - Time: O(N(logN)^2)
+        - Space: O(N)
+
+    Notes:
         The internal algorithm is based on the well-known divide-and-conquer approach
-        for convolving many polynomials, which seems to be equivalent to the one proposed
-        in the following paper in the context of Poisson binomial distribution.
+        for convolving many polynomials. In the context of Poisson binomial distribution,
+        that seems to be equivalent to the one proposed in the following paper.
 
         Biscarri, William & Zhao, Sihai & Brunner, Robert. (2018). A simple and fast
         method for computing the Poisson binomial distribution function. Computational
