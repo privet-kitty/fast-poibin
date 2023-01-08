@@ -30,7 +30,7 @@ class PoiBin:
     Note:
         This class stores data as arrays of `numpy.float64` no matter which type of
         float is passed at initialization. This is partly because `numpy.fft` deals
-        with only `float64`, and partly because it's easy to implement. Please see
+        with only `float64`, and partly because it's easier to implement. Please see
         also https://numpy.org/doc/1.24/reference/routines.fft.html#type-promotion.
 
     Complexity:
