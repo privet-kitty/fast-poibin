@@ -5,7 +5,7 @@ This file documents the various procedures related to the development.
 ## Set up development environment
 
 
-1. Install Poetry. For details, please see the [Installation](https://python-poetry.org/docs/) section of the manual of Poetry.
+1. Install Poetry. For details, please see the [Installation](https://python-poetry.org/docs/#installation) section of the manual of Poetry.
 2. Install [poethepoet](https://github.com/nat-n/poethepoet), a task-runner for Poetry.
    ```bash
    pip install poethepoet  # or you may want to use pipx
