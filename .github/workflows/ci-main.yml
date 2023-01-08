@@ -46,6 +46,7 @@ jobs:
           cache: poetry
       - name: Install dependencies
         run: |
+          poetry env use $(which python)
           poetry install
           poetry run python --version
       - name: Run tests
