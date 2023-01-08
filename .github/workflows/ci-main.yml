@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: "3.10"
           cache: poetry
-      - name: Set up Python virtual environment
+      - name: Install dependencies
         run: poetry install
       - name: Run linter
         run: poe lint
@@ -44,7 +44,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: poetry
-      - name: Set up Python virtual environment
+      - name: Install dependencies
         run: poetry install
       - name: Run tests
         run: poe test --cov-report lcov:coverage/lcov.info
