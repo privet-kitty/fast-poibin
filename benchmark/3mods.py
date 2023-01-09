@@ -70,7 +70,7 @@ poisson_binomial_secs = [
 ] + [math.nan] * 5
 
 master_df = pd.DataFrame.from_records(master_results)
-master_df.to_markdown("benchmark/3mods_master.md", floatfmt=".8f")
+master_df.to_markdown("benchmark/3mods_master.md", floatfmt=".8f", index=False)
 master_df.to_csv("benchmark/3mods_master.csv", index=False)
 
 df = pd.DataFrame()
