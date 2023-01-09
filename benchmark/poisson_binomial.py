@@ -51,4 +51,4 @@ class PoissonBinomial:
             c = xs[n+1-i]
             xs.append(c.conjugate())
 
-        return real(fft(xs))/(n+1)
+        return real(fft.fft(xs))/(n+1)
