@@ -62,8 +62,7 @@ def calc_pmf_dp(probabilities: npt.NDArray[np.float64]) -> npt.NDArray[np.float6
         Time: O(N^2)
         Space: O(N)
     """
-    n = len(probabilities)
-    dp = np.zeros(n + 1, dtype=np.float64)
+    dp = np.zeros(len(probabilities) + 1, dtype=np.float64)
     dp[0] = 1.0
     for i, prob in enumerate(probabilities):
         for j in range(i + 1, 0, -1):
