@@ -103,14 +103,15 @@
 <span class="sd">        with only `float64`, and partly because it&#39;s easier to implement. Please see</span>
 <span class="sd">        also https://numpy.org/doc/1.24/reference/routines.fft.html#type-promotion.</span>
 
-<span class="sd">    Complexity:</span>
+<span class="sd">    Notes:</span>
+<span class="sd">        The internal algorithm is based on the well-known divide-and-conquer approach</span>
+<span class="sd">        for convolving many polynomials. Its complexities are as follows.</span>
+
 <span class="sd">        - Time: O(N(logN)^2)</span>
 <span class="sd">        - Space: O(N)</span>
 
-<span class="sd">    Implementation:</span>
-<span class="sd">        The internal algorithm is based on the well-known divide-and-conquer approach</span>
-<span class="sd">        for convolving many polynomials. In the context of Poisson binomial distribution,</span>
-<span class="sd">        that seems to be equivalent to the one proposed in the following paper.</span>
+<span class="sd">        In the context of Poisson binomial distribution, that seems to be equivalent to</span>
+<span class="sd">        the one proposed in the following paper.</span>
 
 <span class="sd">        Biscarri, William &amp; Zhao, Sihai &amp; Brunner, Robert. (2018). A simple and fast</span>
 <span class="sd">        method for computing the Poisson binomial distribution function. Computational</span>
