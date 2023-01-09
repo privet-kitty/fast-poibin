@@ -76,7 +76,7 @@ def calc_pmf_dp(probabilities: npt.NDArray[np.float64]) -> npt.NDArray[np.float6
 FFT_THRESHOLD = 1024
 
 # calc_pmf first performs DP on each subarray of this length. This value was decided
-# based on the experiment in https://github.com/privet-kitty/fast-poibin/issues/3
+# based on the experiment in https://github.com/privet-kitty/fast-poibin/issues/5
 DP_STEP = 255
 
 
