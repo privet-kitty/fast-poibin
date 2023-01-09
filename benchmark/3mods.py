@@ -79,7 +79,7 @@ df["fast-poibin"] = fast_poibin_secs
 df["poibin"] = poibin_secs
 df["poisson-binomial"] = poisson_binomial_secs
 df.set_index("size", inplace=True)
-print(df.to_markdown("benchmark/3mods_time.md", floatfmt=".8f"))
+df.to_markdown("benchmark/3mods_time.md", floatfmt=".8f")
 df.to_csv("benchmark/3mods_time.csv")
 
 plt.style.use("seaborn-v0_8-whitegrid")
