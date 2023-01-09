@@ -33,14 +33,15 @@ class PoiBin:
         with only `float64`, and partly because it's easier to implement. Please see
         also https://numpy.org/doc/1.24/reference/routines.fft.html#type-promotion.
 
-    Complexity:
+    Notes:
+        The internal algorithm is based on the well-known divide-and-conquer approach
+        for convolving many polynomials. Its complexities are as follows.
+
         - Time: O(N(logN)^2)
         - Space: O(N)
 
-    Implementation:
-        The internal algorithm is based on the well-known divide-and-conquer approach
-        for convolving many polynomials. In the context of Poisson binomial distribution,
-        that seems to be equivalent to the one proposed in the following paper.
+        In the context of Poisson binomial distribution, that seems to be equivalent to
+        the one proposed in the following paper.
 
         Biscarri, William & Zhao, Sihai & Brunner, Robert. (2018). A simple and fast
         method for computing the Poisson binomial distribution function. Computational
