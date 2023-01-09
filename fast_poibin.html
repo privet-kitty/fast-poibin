@@ -116,20 +116,20 @@ float is passed at initialization. This is partly because <cite>numpy.fft</cite>
 with only <cite>float64</cite>, and partly because it’s easier to implement. Please see
 also <a class="reference external" href="https://numpy.org/doc/1.24/reference/routines.fft.html#type-promotion">https://numpy.org/doc/1.24/reference/routines.fft.html#type-promotion</a>.</p>
 </div>
-<dl class="simple">
+<dl>
 <dt>Complexity:</dt><dd><ul class="simple">
 <li><p>Time: O(N(logN)^2)</p></li>
 <li><p>Space: O(N)</p></li>
 </ul>
 </dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>The internal algorithm is based on the well-known divide-and-conquer approach
+<dt>Implementation:</dt><dd><p>The internal algorithm is based on the well-known divide-and-conquer approach
 for convolving many polynomials. In the context of Poisson binomial distribution,
 that seems to be equivalent to the one proposed in the following paper.</p>
 <p>Biscarri, William &amp; Zhao, Sihai &amp; Brunner, Robert. (2018). A simple and fast
 method for computing the Poisson binomial distribution function. Computational
 Statistics &amp; Data Analysis. 122. 10.1016/j.csda.2018.01.007.</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="fast_poibin.PoiBin.quantile">
 <span class="sig-name descname"><span class="pre">quantile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">complex</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">complex</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fast_poibin/poibin.html#PoiBin.quantile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fast_poibin.PoiBin.quantile" title="Permalink to this definition"></a></dt>
