@@ -37,7 +37,7 @@ class PoiBin:
         - Time: O(N(logN)^2)
         - Space: O(N)
 
-    Notes:
+    Implementation:
         The internal algorithm is based on the well-known divide-and-conquer approach
         for convolving many polynomials. In the context of Poisson binomial distribution,
         that seems to be equivalent to the one proposed in the following paper.
