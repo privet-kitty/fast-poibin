@@ -54,9 +54,13 @@ class PoiBin:
         the relative errors of the computed PMF could be large though it is still not
         bad w.r.t. the absolute errors. For details, please see the following issue:
         https://github.com/privet-kitty/fast-poibin/issues/9. For situations where the
-        relative precision is required, you may want to use `dp` mode instead. You
-        should also note that neither mode can express a probability mass below the
-        least positive double float (~ 5 * 10^-324).
+        relative precision is required, you may want to use `dp` mode instead, whose
+        time complexity is O(N^2).
+
+        You should also note that neither mode can express a probability mass below
+        the least positive double float (~ 5 * 10^-324).
+
+
     """
 
     def __init__(
