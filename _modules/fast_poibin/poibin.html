@@ -68,10 +68,12 @@
            <div itemprop="articleBody">
              
   <h1>Source code for fast_poibin.poibin</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">numpy.typing</span> <span class="k">as</span> <span class="nn">npt</span>
 
-<span class="kn">from</span> <span class="nn">fast_poibin.pmf</span> <span class="kn">import</span> <span class="n">FloatSequence</span><span class="p">,</span> <span class="n">calc_pmf</span>
+<span class="kn">from</span> <span class="nn">fast_poibin.pmf</span> <span class="kn">import</span> <span class="n">FloatSequence</span><span class="p">,</span> <span class="n">calc_pmf</span><span class="p">,</span> <span class="n">calc_pmf_dp</span>
 
 
 <span class="k">def</span> <span class="nf">_validate_probabilities</span><span class="p">(</span><span class="n">probabilities</span><span class="p">:</span> <span class="n">FloatSequence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -104,8 +106,8 @@
 <span class="sd">        also https://numpy.org/doc/1.24/reference/routines.fft.html#type-promotion.</span>
 
 <span class="sd">    Notes:</span>
-<span class="sd">        The internal algorithm is based on the well-known divide-and-conquer approach</span>
-<span class="sd">        for convolving many polynomials. Its complexities are as follows.</span>
+<span class="sd">        The internal algorithm  for `mixed` mode is based on the well-known divide-and-conquer</span>
+<span class="sd">        approach for convolving many polynomials. Its complexities are as follows.</span>
 
 <span class="sd">        - Time: O(N(logN)^2)</span>
 <span class="sd">        - Space: O(N)</span>
@@ -116,15 +118,31 @@
 <span class="sd">        Biscarri, William &amp; Zhao, Sihai &amp; Brunner, Robert. (2018). A simple and fast</span>
 <span class="sd">        method for computing the Poisson binomial distribution function. Computational</span>
 <span class="sd">        Statistics &amp; Data Analysis. 122. 10.1016/j.csda.2018.01.007.</span>
+
+<span class="sd">        A downside of this approach is numerical precision. Since convolution by FFT</span>
+<span class="sd">        is unreliable in the world under the float epsilon (i.e. 2^-52 ~ 2 * 10^-16),</span>
+<span class="sd">        the relative errors of the computed PMF could be large though it is still not</span>
+<span class="sd">        bad w.r.t. the absolute errors. For details, please see the following issue:</span>
+<span class="sd">        https://github.com/privet-kitty/fast-poibin/issues/9. For situations where the</span>
+<span class="sd">        relative precision is required, you may want to use `dp` mode instead. You</span>
+<span class="sd">        should also note that neither mode can express a probability mass below the</span>
+<span class="sd">        least positive double float (~ 5 * 10^-324).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">:</span> <span class="n">FloatSequence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">:</span> <span class="n">FloatSequence</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;mixed&quot;</span><span class="p">],</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;dp&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;mixed&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            probabilities: Success probabilities for each binomial trial.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">_validate_probabilities</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pmf</span> <span class="o">=</span> <span class="n">calc_pmf</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;mixed&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pmf</span> <span class="o">=</span> <span class="n">calc_pmf</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;dp&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pmf</span> <span class="o">=</span> <span class="n">calc_pmf_dp</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid mode: </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cdf</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pmf</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cdf</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
 
