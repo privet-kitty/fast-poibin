@@ -83,3 +83,8 @@ def test_poibin_dp_mode_mixed_mode_equivalence() -> None:
     poibin_mixed = PoiBin([0.1, 0.2, 0.3, 0.4], mode="mixed")
     nptest.assert_array_almost_equal(poibin_dp.pmf, poibin_mixed.pmf)
     nptest.assert_array_almost_equal(poibin_dp.cdf, poibin_mixed.cdf)
+
+
+def test_poibin_invalid_mode() -> None:
+    with pytest.raises(ValueError):
+        PoiBin([], mode="asdf")  # type: ignore
