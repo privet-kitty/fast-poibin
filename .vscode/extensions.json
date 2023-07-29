@@ -4,7 +4,5 @@
     "ms-python.black-formatter",
     "ms-python.isort"
   ],
-  "unwantedRecommendations": [
-    "ms-python.mypy-type-checker" // it doesn't respect tool.mypy
-  ]
+  "unwantedRecommendations": ["ms-python.mypy-type-checker"]
 }
