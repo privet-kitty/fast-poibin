@@ -2,7 +2,9 @@
   "python.languageServer": "Pylance",
   "python.terminal.activateEnvInCurrentTerminal": true,
   "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": { "source.organizeImports": true },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": false,
   "terminal.integrated.env.windows": { "PYTHONPATH": "${workspaceFolder}" },
