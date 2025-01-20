@@ -15,7 +15,7 @@ fast-poibin is a Python package for efficiently computing PMF or CDF of Poisson 
 pip install fast-poibin
 ```
 
-Python versions 3.8 or later are supported.
+Python versions 3.10 to 3.13 are supported. (Version 3.13 is the latest version as of this writing. If you want to use it with a newer version of Python, please feel free to create an [issue](https://github.com/privet-kitty/fast-poibin/issues).)
 
 ## Basic Usage
 
@@ -30,4 +30,4 @@ array([0.576, 0.928, 0.996, 1.   ])
 
 ## Copyright
 
-Copyright (c) 2023 Hugo Sansaqua.
+Copyright (c) 2023-2025 Hugo Sansaqua.
