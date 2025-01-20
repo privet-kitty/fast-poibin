@@ -8,7 +8,7 @@ from fast_poibin.poibin import PoiBin
 
 def test_poibin_empty() -> None:
     for mode in ("mixed", "dp"):
-        poibin = PoiBin([], mode=mode)  # type: ignore
+        poibin = PoiBin([], mode=mode)
         nptest.assert_array_almost_equal(poibin.pmf, [1])
         nptest.assert_array_almost_equal(poibin.cdf, [1])
         assert poibin.quantile(0) == 0
@@ -21,7 +21,7 @@ def test_poibin_empty() -> None:
 
 def test_poibin_single() -> None:
     for mode in ("mixed", "dp"):
-        poibin = PoiBin([0.9], mode=mode)  # type: ignore
+        poibin = PoiBin([0.9], mode=mode)
         nptest.assert_array_almost_equal(poibin.pmf, [0.1, 0.9])
         nptest.assert_array_almost_equal(poibin.cdf, [0.1, 1])
         assert poibin.quantile(0) == 0
@@ -34,7 +34,7 @@ def test_poibin_single() -> None:
 
 def test_poibin_all_zero() -> None:
     for mode in ("mixed", "dp"):
-        poibin = PoiBin([0, 0, 0, 0, 0], mode=mode)  # type: ignore
+        poibin = PoiBin([0, 0, 0, 0, 0], mode=mode)
         nptest.assert_array_equal(poibin.pmf, [1, 0, 0, 0, 0, 0])
         nptest.assert_array_equal(poibin.cdf, [1] * 6)
         assert poibin.quantile(0) == 0
@@ -44,7 +44,7 @@ def test_poibin_all_zero() -> None:
 
 def test_poibin_all_one() -> None:
     for mode in ("mixed", "dp"):
-        poibin = PoiBin([1, 1, 1], mode=mode)  # type: ignore
+        poibin = PoiBin([1, 1, 1], mode=mode)
         nptest.assert_array_equal(poibin.pmf, [0, 0, 0, 1])
         nptest.assert_array_equal(poibin.cdf, [0, 0, 0, 1])
         assert poibin.quantile(0) == 0
@@ -55,7 +55,7 @@ def test_poibin_all_one() -> None:
 def test_poibin_non_float64() -> None:
     """PoiBin stores float64 even when the argument is not."""
     for mode in ("mixed", "dp"):
-        poibin = PoiBin(np.array([0.2, 0.5], np.float32), mode=mode)  # type: ignore
+        poibin = PoiBin(np.array([0.2, 0.5], np.float32), mode=mode)
         assert poibin.pmf.dtype == np.float64
         assert poibin.cdf.dtype == np.float64
 
