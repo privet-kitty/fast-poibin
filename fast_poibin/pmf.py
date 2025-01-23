@@ -1,4 +1,3 @@
-import sys
 from itertools import zip_longest
 from typing import Any, Optional, Sequence, Union
 
@@ -84,10 +83,7 @@ DP_STEP = 255
 # 1. 1D np.ndarray is not Sequence. I couldn't find an appropriate iterable type that
 # contains np.ndarray.
 # 2. I'm not sure whether np.floating[Any] is a decent type for generic float.
-if sys.version_info[0:2] <= (3, 8):
-    FloatSequence = Union[Sequence[float], npt.NDArray[np.floating]]
-else:
-    FloatSequence = Union[Sequence[float], npt.NDArray[np.floating[Any]]]
+FloatSequence = Union[Sequence[float], npt.NDArray[np.floating[Any]]]
 
 
 def calc_pmf(probabilities: FloatSequence, dp_step: int = DP_STEP) -> npt.NDArray[np.float64]:
