@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>fast_poibin.poibin &mdash; fast-poibin 0.3.2 documentation</title>
+  <title>fast_poibin.poibin &mdash; fast-poibin 0.4.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -26,7 +26,7 @@
             <a href="../../index.html" class="icon icon-home"> fast-poibin
           </a>
               <div class="version">
-                0.3.2
+                0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -66,15 +66,15 @@
            <div itemprop="articleBody">
              
   <h1>Source code for fast_poibin.poibin</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">numpy.typing</span> <span class="k">as</span> <span class="nn">npt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">npt</span>
 
-<span class="kn">from</span> <span class="nn">fast_poibin.pmf</span> <span class="kn">import</span> <span class="n">FloatSequence</span><span class="p">,</span> <span class="n">calc_pmf</span><span class="p">,</span> <span class="n">calc_pmf_dp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fast_poibin.pmf</span><span class="w"> </span><span class="kn">import</span> <span class="n">FloatSequence</span><span class="p">,</span> <span class="n">calc_pmf</span><span class="p">,</span> <span class="n">calc_pmf_dp</span>
 
 
-<span class="k">def</span> <span class="nf">_validate_probabilities</span><span class="p">(</span><span class="n">probabilities</span><span class="p">:</span> <span class="n">FloatSequence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_validate_probabilities</span><span class="p">(</span><span class="n">probabilities</span><span class="p">:</span> <span class="n">FloatSequence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
         <span class="k">assert</span> <span class="n">probabilities</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span>
         <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">probabilities</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
@@ -83,7 +83,7 @@
         <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">p</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">probabilities</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="PoiBin"><a class="viewcode-back" href="../../fast_poibin.html#fast_poibin.PoiBin">[docs]</a><span class="k">class</span> <span class="nc">PoiBin</span><span class="p">:</span>
+<div class="viewcode-block" id="PoiBin"><a class="viewcode-back" href="../../fast_poibin.html#fast_poibin.PoiBin">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">PoiBin</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for storing PMF and CDF of Poisson binomial distribution.</span>
 
 <span class="sd">    Attributes:</span>
@@ -131,7 +131,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">:</span> <span class="n">FloatSequence</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;mixed&quot;</span><span class="p">],</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;dp&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;mixed&quot;</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -148,7 +148,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">cdf</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pmf</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cdf</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
 
-<div class="viewcode-block" id="PoiBin.quantile"><a class="viewcode-back" href="../../fast_poibin.html#fast_poibin.PoiBin.quantile">[docs]</a>    <span class="k">def</span> <span class="nf">quantile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">ArrayLike</span><span class="p">):</span>  <span class="c1"># type: ignore</span>
+<div class="viewcode-block" id="PoiBin.quantile"><a class="viewcode-back" href="../../fast_poibin.html#fast_poibin.PoiBin.quantile">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">quantile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">ArrayLike</span><span class="p">):</span>  <span class="c1"># type: ignore</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Quantile function (inverse of `cdf`).</span>
 
 <span class="sd">        Args:</span>
