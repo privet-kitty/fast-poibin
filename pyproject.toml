@@ -6,7 +6,7 @@ authors = [{ name = "Hugo Sansaqua", email = "privet.kitty99@gmail.com" }]
 license = "MPL-2.0"
 license-files = ["LICENSE"]
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "numba>=0.57,<0.58; python_version < '3.12'",
     "numba>=0.59,<0.60; python_version == '3.12'",
