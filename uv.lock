@@ -246,7 +246,7 @@ wheels = [
 
 [[package]]
 name = "fast-poibin"
-version = "0.4.0"
+version = "0.4.1"
 source = { editable = "." }
 dependencies = [
     { name = "numba", version = "0.57.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
