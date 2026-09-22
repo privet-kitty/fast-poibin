@@ -1,39 +1,44 @@
-[tool.poetry]
+[project]
 name = "fast-poibin"
 version = "0.4.0"
 description = "Package for computing PMF and CDF of Poisson binomial distribution."
-authors = ["Hugo Sansaqua <privet.kitty99@gmail.com>"]
+authors = [{ name = "Hugo Sansaqua", email = "privet.kitty99@gmail.com" }]
 license = "MPL-2.0"
+license-files = ["LICENSE"]
 readme = "README.md"
-repository = "https://github.com/privet-kitty/fast-poibin"
-documentation = "https://privet-kitty.github.io/fast-poibin/"
-packages = [{ include = "fast_poibin" }]
-
-[tool.poetry.dependencies]
-python = "^3.9"
-numba = [
-    { version = "^0.57", python = ">=3.9,<3.12" },
-    { version = "^0.59", python = ">=3.12,<3.13" },
-    { version = "^0.61", python = ">=3.13" },
+requires-python = ">=3.9"
+dependencies = [
+    "numba>=0.57,<0.58; python_version < '3.12'",
+    "numba>=0.59,<0.60; python_version == '3.12'",
+    "numba>=0.61,<0.62; python_version >= '3.13'",
+    "numpy>=1.23",
 ]
-numpy = ">=1.23"
 
-[tool.poetry.group.dev.dependencies]
-mypy = "^1.4.1"
-flake8 = "^5.0.4"
-black = "^22.12.0"
-isort = "^5.11.4"
-poethepoet = "^0.17.1"
-pytest = "^7.2.0"
-pytest-cov = "^4.0.0"
-coverage = { extras = ["toml"], version = "^7.0.3" }
-pytest-mock = "^3.10.0"
-sphinx-rtd-theme = "1.2.0rc2"
-Sphinx = "^6.1.2"
+[project.urls]
+Repository = "https://github.com/privet-kitty/fast-poibin"
+Documentation = "https://privet-kitty.github.io/fast-poibin/"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.4.1,<2",
+    "flake8>=5.0.4,<6",
+    "black>=22.12.0,<23",
+    "isort>=5.11.4,<6",
+    "poethepoet>=0.17.1,<0.18",
+    "pytest>=7.2.0,<8",
+    "pytest-cov>=4.0.0,<5",
+    "coverage[toml]>=7.0.3,<8",
+    "pytest-mock>=3.10.0,<4",
+    "sphinx-rtd-theme==1.2.0rc2",
+    "sphinx>=6.1.2,<7",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.11.7,<0.12.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-root = ""
 
 [tool.mypy]
 strict = true

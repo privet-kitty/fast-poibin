@@ -5,16 +5,18 @@ This file documents the various procedures related to the development.
 ## Set up development environment
 
 
-1. Install Poetry. For details, please see the [Installation](https://python-poetry.org/docs/#installation) section of the manual of Poetry.
-2. Install [poethepoet](https://github.com/nat-n/poethepoet), a task-runner for Poetry.
-   ```bash
-   pip install poethepoet  # or you may want to use pipx
-   ```
-3. Create a virtual environment and install dependencies.
+1. Install uv. For details, please see the [Installation](https://docs.astral.sh/uv/getting-started/installation/) section of the manual of uv.
+2. Create a virtual environment and install dependencies. The project is installed in editable mode together with the `dev` dependency group.
    ```bash
    cd /path/to/cloned/repository
-   poetry env use /path/to/python  # if you need
-   poetry install
+   uv sync --python /path/to/python  # or just `uv sync` to let uv pick an interpreter
+   ```
+3. Run tasks via [poethepoet](https://github.com/nat-n/poethepoet), which is installed as a dev dependency.
+   ```bash
+   uv run poe lint
+   uv run poe type-check
+   uv run poe test
+   uv run poe docs
    ```
 4. Run VSCode. You will need to select the Python interpreter after start-up.
    ```bash
@@ -37,17 +39,18 @@ Below are the procedures to release a new version to PyPI.
     git fetch
     git reset --hard origin/main
     ```
-2. Bump version and add a tag. You can use `poetry version [patch|minor|major]` to update the version key in `pyproject.toml`. Below is the procedure for using `patch`.
+2. Bump version and add a tag. You can use `uv version --bump [patch|minor|major]` to update the version key in `pyproject.toml` (and `uv.lock`). Below is the procedure for using `patch`.
     ```bash
-    version=$(poetry version --short patch) 
-    # or $version = poetry version --short patch in PowerShell
+    version=$(uv version --short --bump patch)
+    # or $version = uv version --short --bump patch in PowerShell
     echo $version
     git commit -am "Bump version"
     git push
     git tag $version
     git push origin $version
     ```
-3. Publish the package to PyPI. You'll need to register an API token of PyPI in advance with `poetry config pypi-token.pypi <token>`.
+3. Publish the package to PyPI. You'll need an API token of PyPI, which you can pass with `--token <token>` or the `UV_PUBLISH_TOKEN` environment variable.
    ```bash
-   poetry publish --build
+   uv build --clear
+   uv publish
    ```

@@ -18,20 +18,16 @@ jobs:
     needs: prepare
     steps:
       - uses: actions/checkout@v3
-      - name: Install Poetry and poethepoet
-        run: |
-          pipx install poetry
-          pipx install poethepoet
-      - uses: actions/setup-python@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10
         with:
           python-version: "3.13"
-          cache: poetry
       - name: Install dependencies
-        run: poetry install
+        run: uv sync --locked
       - name: Run linter
-        run: poe lint
+        run: uv run poe lint
       - name: Check types
-        run: poe type-check
+        run: uv run poe type-check
   test:
     name: Run test
     runs-on: ubuntu-latest
@@ -41,17 +37,13 @@ jobs:
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v3
-      - name: Install Poetry and poethepoet
-        run: |
-          pipx install poetry
-          pipx install poethepoet
-      - uses: actions/setup-python@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10
         with:
           python-version: ${{ matrix.python-version }}
-          cache: poetry
       - name: Install dependencies
         run: |
-          poetry install
-          [[ $(poetry run python --version) =~ ${{ matrix.python-version }}\.* ]]
+          uv sync --locked
+          [[ $(uv run python --version) =~ ${{ matrix.python-version }}\.* ]]
       - name: Run tests
-        run: poe test
+        run: uv run poe test
