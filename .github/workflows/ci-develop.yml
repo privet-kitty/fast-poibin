@@ -22,12 +22,14 @@ jobs:
         uses: astral-sh/setup-uv@v10.2.0
         with:
           python-version: "3.13"
+      - name: Install poethepoet
+        run: uv tool install poethepoet
       - name: Install dependencies
         run: uv sync --locked
       - name: Run linter
-        run: uv run poe lint
+        run: poe lint
       - name: Check types
-        run: uv run poe type-check
+        run: poe type-check
   test:
     name: Run test
     runs-on: ubuntu-latest
@@ -41,9 +43,11 @@ jobs:
         uses: astral-sh/setup-uv@v10.2.0
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install poethepoet
+        run: uv tool install poethepoet
       - name: Install dependencies
         run: |
           uv sync --locked
           [[ $(uv run python --version) =~ ${{ matrix.python-version }}\.* ]]
       - name: Run tests
-        run: uv run poe test
+        run: poe test

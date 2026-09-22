@@ -11,12 +11,13 @@ This file documents the various procedures related to the development.
    cd /path/to/cloned/repository
    uv sync --python /path/to/python  # or just `uv sync` to let uv pick an interpreter
    ```
-3. Run tasks via [poethepoet](https://github.com/nat-n/poethepoet), which is installed as a dev dependency.
+3. Install [poethepoet](https://github.com/nat-n/poethepoet) 0.33 or later, a task runner. It detects the uv project and runs each task via `uv run`.
    ```bash
-   uv run poe lint
-   uv run poe type-check
-   uv run poe test
-   uv run poe docs
+   uv tool install poethepoet  # or you may want to use pipx
+   poe lint
+   poe type-check
+   poe test
+   poe docs
    ```
 4. Run VSCode. You will need to select the Python interpreter after start-up.
    ```bash

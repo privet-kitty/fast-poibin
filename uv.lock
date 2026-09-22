@@ -264,7 +264,6 @@ dev = [
     { name = "flake8" },
     { name = "isort" },
     { name = "mypy" },
-    { name = "poethepoet" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "pytest-mock" },
@@ -287,7 +286,6 @@ dev = [
     { name = "flake8", specifier = ">=5.0.4,<6" },
     { name = "isort", specifier = ">=5.11.4,<6" },
     { name = "mypy", specifier = ">=1.4.1,<2" },
-    { name = "poethepoet", specifier = ">=0.17.1,<0.18" },
     { name = "pytest", specifier = ">=7.2.0,<8" },
     { name = "pytest-cov", specifier = ">=4.0.0,<5" },
     { name = "pytest-mock", specifier = ">=3.10.0,<4" },
@@ -841,15 +839,6 @@ wheels = [
 ]
 
 [[package]]
-name = "pastel"
-version = "0.2.1"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/76/f1/4594f5e0fcddb6953e5b8fe00da8c317b8b41b547e2b3ae2da7512943c62/pastel-0.2.1.tar.gz", hash = "sha256:e6581ac04e973cac858828c6202c1e1e81fee1dc7de7683f3e1ffe0bfd8a573d", size = 7555, upload-time = "2020-09-16T19:21:12.43Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/aa/18/a8444036c6dd65ba3624c63b734d3ba95ba63ace513078e1580590075d21/pastel-0.2.1-py2.py3-none-any.whl", hash = "sha256:4349225fcdf6c2bb34d483e523475de5bb04a5c10ef711263452cb37d7dd4364", size = 5955, upload-time = "2020-09-16T19:21:11.409Z" },
-]
-
-[[package]]
 name = "pathspec"
 version = "0.12.1"
 source = { registry = "https://pypi.org/simple" }
@@ -874,19 +863,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/96/2d/02d4312c973c6050a18b314a5ad0b3210edb65a906f868e31c111dede4a6/pluggy-1.5.0.tar.gz", hash = "sha256:2cffa88e94fdc978c4c574f15f9e59b7f4201d439195c3715ca9e2486f1d0cf1", size = 67955, upload-time = "2024-04-20T21:34:42.531Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/88/5f/e351af9a41f866ac3f1fac4ca0613908d9a41741cfcf2228f4ad853b697d/pluggy-1.5.0-py3-none-any.whl", hash = "sha256:44e1ad92c8ca002de6377e165f3e0f1be63266ab4d554740532335b9d75ea669", size = 20556, upload-time = "2024-04-20T21:34:40.434Z" },
-]
-
-[[package]]
-name = "poethepoet"
-version = "0.17.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pastel" },
-    { name = "tomli" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/ba/f1/7b3d59e4b41ede547ba7d1896a30f836b924435660c9343bf25c93da7e96/poethepoet-0.17.1.tar.gz", hash = "sha256:0429990ab4faa92d96cd7b7d66e9cf5bb5598adbe0ee9af8482f9d10e28a6290", size = 77089, upload-time = "2022-12-26T21:03:31.123Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d4/87/2e279aa59562036938dd0e1b44202b907ba106e7bf1b3943f9d497ba05b9/poethepoet-0.17.1-py3-none-any.whl", hash = "sha256:e54213659f3f2c6ed71fbfbe865ca14d095bb945c82a839df4df5e7811f5653d", size = 64845, upload-time = "2022-12-26T21:03:29.459Z" },
 ]
 
 [[package]]
