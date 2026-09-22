@@ -8,9 +8,10 @@ license-files = ["LICENSE"]
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "numba>=0.57,<0.58; python_version < '3.12'",
-    "numba>=0.59,<0.60; python_version == '3.12'",
-    "numba>=0.61,<0.62; python_version >= '3.13'",
+    "numba>=0.57",
+    "numba>=0.59; python_version >= '3.12'",
+    "numba>=0.61; python_version >= '3.13'",
+    "numba>=0.63; python_version >= '3.14'",
     "numpy>=1.23",
 ]
 
